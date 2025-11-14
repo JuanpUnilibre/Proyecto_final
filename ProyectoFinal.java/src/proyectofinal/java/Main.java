@@ -12,9 +12,9 @@ public class Main {
 
         int[][] bordes = DetectorBordes.detectarBordesIntegral(imagen, tamVentana, umbral);
 
-        PGMUtils.guardarPGM(bordes, "output/bordes_lena.pgm");
+        PGMUtils.guardarPGM(bordes, "output/bordes_CultivoV2.pgm");
 
-        System.out.println("Procesado. Archivo generado en output/bordes_lena.pgm");
+        System.out.println("Procesado. Archivo generado en output/CultivoV2.pgm");
     }
 }
 
