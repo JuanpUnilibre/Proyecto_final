@@ -6,12 +6,13 @@ public class DetectorBordes {
     // 1. VERSIÓN NAIVE (O(N^2 * k^2))
     // ---------------------------------------------------
     public static int[][] detectarBordesNaive(int[][] imagen, int tamVentana, double umbral) {
-        int N = imagen.length;
-        int[][] bordes = new int[N][N];
+        int alto = imagen.length;           // Número de filas
+        int ancho = imagen[0].length;       // Número de columnas
+        int[][] bordes = new int[alto][ancho];
         int radio = tamVentana / 2;
 
-        for (int i = radio; i < N - radio; i++) {
-            for (int j = radio; j < N - radio; j++) {
+        for (int i = radio; i < alto - radio; i++) {
+            for (int j = radio; j < ancho - radio; j++) {
 
                 double suma = 0;
                 double sumaCuadrados = 0;
@@ -39,20 +40,21 @@ public class DetectorBordes {
     // 2. VERSIÓN OPTIMIZADA (O(N^2))
     // ---------------------------------------------------
     public static int[][] detectarBordesIntegral(int[][] imagen, int tamVentana, double umbral) {
-        int N = imagen.length;
-        int[][] bordes = new int[N][N];
+        int alto = imagen.length;           // Número de filas
+        int ancho = imagen[0].length;       // Número de columnas
+        int[][] bordes = new int[alto][ancho];
         int radio = tamVentana / 2;
 
-        long[][] sumaIntegral = new long[N][N];
-        long[][] sumaIntegralCuadrados = new long[N][N];
+        long[][] sumaIntegral = new long[alto][ancho];
+        long[][] sumaIntegralCuadrados = new long[alto][ancho];
 
         // Construir integrales
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < alto; i++) {
             long sumaFila = 0;
             long sumaFilaCuadrados = 0;
-            for (int j = 0; j < N; j++) {
+            for (int j = 0; j < ancho; j++) {
                 sumaFila += imagen[i][j];
-                sumaFilaCuadrados += imagen[i][j] * imagen[i][j];
+                sumaFilaCuadrados += (long)imagen[i][j] * imagen[i][j];
 
                 if (i == 0) {
                     sumaIntegral[i][j] = sumaFila;
@@ -65,8 +67,8 @@ public class DetectorBordes {
         }
 
         // Aplicar ventana usando integral
-        for (int i = radio; i < N - radio; i++) {
-            for (int j = radio; j < N - radio; j++) {
+        for (int i = radio; i < alto - radio; i++) {
+            for (int j = radio; j < ancho - radio; j++) {
 
                 int x1 = i - radio;
                 int y1 = j - radio;
